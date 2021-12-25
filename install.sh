@@ -35,7 +35,7 @@ main() {
     FREEBSD_PACKAGE_LIST_URL="https://pkg.freebsd.org/${ABI}/latest/packagesite.txz"
 
     # Defaults
-     #H_LANG_DEFAULT="en"
+     H_LANG_DEFAULT="en"
      #H_MYSQL_ROOT_PASS_DEFAULT="hotspot"
      #H_MYSQL_USER_NAME_DEFAULT="hotspot"
      #H_MYSQL_USER_PASS_DEFAULT="hotspot"
