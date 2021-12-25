@@ -17,5 +17,8 @@ $config = parse_config(true);
 
 
 
-
+// Ana Sayfa Servis Status
+if (!preg_match("/services_status/", $config['widgets']['sequence'])) {
+    $config['widgets']['sequence'] = $config['widgets']['sequence'] . ",services_status:col2:open";
+}
 write_config("Firewall Settings added.");
