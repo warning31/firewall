@@ -35,14 +35,14 @@ main() {
     FREEBSD_PACKAGE_LIST_URL="https://pkg.freebsd.org/${ABI}/latest/packagesite.txz"
 
     # Defaults
-     H_LANG_DEFAULT="en"
-     H_MYSQL_ROOT_PASS_DEFAULT="hotspot"
-     H_MYSQL_USER_NAME_DEFAULT="hotspot"
-     H_MYSQL_USER_PASS_DEFAULT="hotspot"
-     H_MYSQL_DBNAME_DEFAULT="hotspot"
-     H_ZONE_NAME_DEFAULT="HOTSPOT"
-     H_KABLOSUZ_INTERFACES_DEFAULT="opt1"
-     H_LAN_INTERFACES_DEFAULT="lan"
+     #H_LANG_DEFAULT="en"
+     #H_MYSQL_ROOT_PASS_DEFAULT="hotspot"
+     #H_MYSQL_USER_NAME_DEFAULT="hotspot"
+     #H_MYSQL_USER_PASS_DEFAULT="hotspot"
+     #H_MYSQL_DBNAME_DEFAULT="hotspot"
+     #H_ZONE_NAME_DEFAULT="HOTSPOT"
+     #H_KABLOSUZ_INTERFACES_DEFAULT="opt1"
+     #H_LAN_INTERFACES_DEFAULT="lan"
 
     _selectLanguage
 
@@ -71,12 +71,12 @@ main() {
     _cronInstall
 
     # squid kuruluyor...
-    #_squidInstall
+    _squidInstall
 
     # squidGuard kuruluyor...
-    #_squidGuardInstall
+    _squidGuardInstall
 
-    # Hotspot Konfigurasyon yukleniyor...
+    # Konfigurasyon yukleniyor...
     _settings
 
     # Temizlik
@@ -326,41 +326,41 @@ _cronInstall() {
     echo ${L_OK} 1>&3
 }
 
-#_squidInstall() {
-#    /usr/local/sbin/pfSsh.php playback listpkg | grep "squid"
-#    if [ $? == 0 ]; then
-#        echo -n ${L_CRONALREADYINSTALLED} 1>&3
-#    else
-#        echo -n ${L_CRONINSTALL} 1>&3
-#        /usr/local/sbin/pfSsh.php playback installpkg "squid"
-#        hash -r
-#    fi
-#    echo ${L_OK} 1>&3
-#}
+_squidInstall() {
+    /usr/local/sbin/pfSsh.php playback listpkg | grep "squid"
+    if [ $? == 0 ]; then
+        echo -n ${L_CRONALREADYINSTALLED} 1>&3
+    else
+        echo -n ${L_CRONINSTALL} 1>&3
+        /usr/local/sbin/pfSsh.php playback installpkg "squid"
+        hash -r
+    fi
+    echo ${L_OK} 1>&3
+}
 
 
-#_squidGuardInstall() {
-#    /usr/local/sbin/pfSsh.php playback listpkg | grep "squidGuard"
-#    if [ $? == 0 ]; then
-#        echo -n ${L_CRONALREADYINSTALLED} 1>&3
-#    else
-#        echo -n ${L_CRONINSTALL} 1>&3
-#        /usr/local/sbin/pfSsh.php playback installpkg "squidGuard"
-#        hash -r
-#    fi
- #   echo ${L_OK} 1>&3
-#}
+_squidGuardInstall() {
+    /usr/local/sbin/pfSsh.php playback listpkg | grep "squidGuard"
+    if [ $? == 0 ]; then
+        echo -n ${L_CRONALREADYINSTALLED} 1>&3
+    else
+        echo -n ${L_CRONINSTALL} 1>&3
+        /usr/local/sbin/pfSsh.php playback installpkg "squidGuard"
+        hash -r
+    fi
+    echo ${L_OK} 1>&3
+}
 
 
 _settings() {
     echo -n ${L_HOTSPOTSETTINGS} 1>&3
     cp /usr/local/firewall/config/config.php /etc/phpshellsessions/config
-    sed -i .bak -e "s/{H_MYSQL_USER_NAME}/$H_MYSQL_USER_NAME/g" /etc/phpshellsessions/config
-    sed -i .bak -e "s/{H_MYSQL_USER_PASS}/$H_MYSQL_USER_PASS/g" /etc/phpshellsessions/config
-    sed -i .bak -e "s/{H_MYSQL_DBNAME}/$H_MYSQL_DBNAME/g" /etc/phpshellsessions/config
-    sed -i .bak -e "s/{H_ZONE_NAME}/$H_ZONE_NAME/g" /etc/phpshellsessions/config
-    sed -i .bak -e "s/{H_KABLOSUZ_INTERFACES}/$H_KABLOSUZ_INTERFACES/g" /etc/phpshellsessions/config
-    sed -i .bak -e "s/{H_LAN_INTERFACES}/$H_LAN_INTERFACES/g" /etc/phpshellsessions/config
+  #  sed -i .bak -e "s/{H_MYSQL_USER_NAME}/$H_MYSQL_USER_NAME/g" /etc/phpshellsessions/config
+  #  sed -i .bak -e "s/{H_MYSQL_USER_PASS}/$H_MYSQL_USER_PASS/g" /etc/phpshellsessions/config
+  #  sed -i .bak -e "s/{H_MYSQL_DBNAME}/$H_MYSQL_DBNAME/g" /etc/phpshellsessions/config
+   # sed -i .bak -e "s/{H_ZONE_NAME}/$H_ZONE_NAME/g" /etc/phpshellsessions/config
+   # sed -i .bak -e "s/{H_KABLOSUZ_INTERFACES}/$H_KABLOSUZ_INTERFACES/g" /etc/phpshellsessions/config
+   # sed -i .bak -e "s/{H_LAN_INTERFACES}/$H_LAN_INTERFACES/g" /etc/phpshellsessions/config
     /usr/local/sbin/pfSsh.php playback config
     echo ${L_OK} 1>&3
 }
