@@ -56,7 +56,7 @@ main() {
     echo
 
     # User Inputs
-    _userInputs
+    #_userInputs
 
     echo
     echo ${L_STARTING}
@@ -102,32 +102,32 @@ _selectLanguage() {
     H_LANG="${H_LANG:-$H_LANG_DEFAULT}"
     case "${H_LANG}" in
     [eE][nN])
-        fetch https://raw.githubusercontent.com/warning31/hotspot/master/config/lang_en.inc
+        fetch https://raw.githubusercontent.com/warning31/firewall/master/config/lang_en.inc
         . lang_en.inc
         ;;
     [tT][rR])
-        fetch https://raw.githubusercontent.com/warning31/hotspot/master/config/lang_tr.inc
+        fetch https://raw.githubusercontent.com/warning31/firewall/master/config/lang_tr.inc
         . lang_tr.inc
         ;;
     esac
 }
 
-_userInputs() {
-    read -p "$L_ROOTPASS [$H_MYSQL_ROOT_PASS_DEFAULT]: " H_MYSQL_ROOT_PASS
-    H_MYSQL_ROOT_PASS="${H_MYSQL_ROOT_PASS:-$H_MYSQL_ROOT_PASS_DEFAULT}"
-    read -p "$L_RADIUSUSERNAME [$H_MYSQL_USER_NAME_DEFAULT]: " H_MYSQL_USER_NAME
-    H_MYSQL_USER_NAME="${H_MYSQL_USER_NAME:-$H_MYSQL_USER_NAME_DEFAULT}"
-    read -p "$L_RADIUSPASSWORD [$H_MYSQL_USER_PASS_DEFAULT]: " H_MYSQL_USER_PASS
-    H_MYSQL_USER_PASS="${H_MYSQL_USER_PASS:-$H_MYSQL_USER_PASS_DEFAULT}"
-    read -p "$L_RADIUSDBNAME [$H_MYSQL_DBNAME_DEFAULT]: " H_MYSQL_DBNAME
-    H_MYSQL_DBNAME="${H_MYSQL_DBNAME:-$H_MYSQL_DBNAME_DEFAULT}"
-    read -p "$L_ZONENAME [$H_ZONE_NAME_DEFAULT]: " H_ZONE_NAME
-    H_ZONE_NAME="${H_ZONE_NAME:-$H_ZONE_NAME_DEFAULT}"
-    read -p "$L_LAN_INTERFACES [$H_LAN_INTERFACES_DEFAULT]: " H_LAN_INTERFACES
-    H_LAN_INTERFACES="${H_LAN_INTERFACES:-$H_KABLOSUZ_INTERFACES_DEFAULT}"
-    read -p "$L_KABLOSUZ_INTERFACES [$H_KABLOSUZ_INTERFACES_DEFAULT]: " H_KABLOSUZ_INTERFACES
-    H_KABLOSUZ_INTERFACES="${H_KABLOSUZ_INTERFACES:-$H_KABLOSUZ_INTERFACES_DEFAULT}"
-}
+#_userInputs() {
+#    read -p "$L_ROOTPASS [$H_MYSQL_ROOT_PASS_DEFAULT]: " H_MYSQL_ROOT_PASS
+#    H_MYSQL_ROOT_PASS="${H_MYSQL_ROOT_PASS:-$H_MYSQL_ROOT_PASS_DEFAULT}"
+#    read -p "$L_RADIUSUSERNAME [$H_MYSQL_USER_NAME_DEFAULT]: " H_MYSQL_USER_NAME
+#    H_MYSQL_USER_NAME="${H_MYSQL_USER_NAME:-$H_MYSQL_USER_NAME_DEFAULT}"
+#    read -p "$L_RADIUSPASSWORD [$H_MYSQL_USER_PASS_DEFAULT]: " H_MYSQL_USER_PASS
+#    H_MYSQL_USER_PASS="${H_MYSQL_USER_PASS:-$H_MYSQL_USER_PASS_DEFAULT}"
+#    read -p "$L_RADIUSDBNAME [$H_MYSQL_DBNAME_DEFAULT]: " H_MYSQL_DBNAME
+#    H_MYSQL_DBNAME="${H_MYSQL_DBNAME:-$H_MYSQL_DBNAME_DEFAULT}"
+#   read -p "$L_ZONENAME [$H_ZONE_NAME_DEFAULT]: " H_ZONE_NAME
+#    H_ZONE_NAME="${H_ZONE_NAME:-$H_ZONE_NAME_DEFAULT}"
+#    read -p "$L_LAN_INTERFACES [$H_LAN_INTERFACES_DEFAULT]: " H_LAN_INTERFACES
+ #   H_LAN_INTERFACES="${H_LAN_INTERFACES:-$H_KABLOSUZ_INTERFACES_DEFAULT}"
+ #   read -p "$L_KABLOSUZ_INTERFACES [$H_KABLOSUZ_INTERFACES_DEFAULT]: " H_KABLOSUZ_INTERFACES
+ #   H_KABLOSUZ_INTERFACES="${H_KABLOSUZ_INTERFACES:-$H_KABLOSUZ_INTERFACES_DEFAULT}"
+#}
 
 AddPkg() {
     pkgname=$1
@@ -165,110 +165,13 @@ _installPackages() {
         fetch ${FREEBSD_PACKAGE_LIST_URL}
         tar vfx packagesite.txz
 
-        AddPkg cvsps
-        AddPkg p5-Digest-HMAC
-        AddPkg p5-GSSAPI
-        AddPkg p5-Authen-SASL
-        AddPkg p5-HTML-Tagset
-        AddPkg p5-Clone
-        AddPkg p5-Encode-Locale
-        AddPkg p5-TimeDate
-        AddPkg p5-HTTP-Date
-        AddPkg p5-IO-HTML
-        AddPkg p5-LWP-MediaTypes
-        AddPkg p5-URI
-        AddPkg p5-HTTP-Message
-        AddPkg p5-HTML-Parser
-        AddPkg p5-CGI
-        AddPkg p5-Error
-        AddPkg p5-Socket6
-        AddPkg p5-IO-Socket-INET6
-        AddPkg p5-Mozilla-CA
-        AddPkg p5-Net-SSLeay
-        AddPkg p5-IO-Socket-SSL
-        AddPkg p5-Term-ReadKey
-        AddPkg db5
         AddPkg zip
-        AddPkg gdbm
-        AddPkg apr
-        AddPkg serf
-        AddPkg utf8proc
-        AddPkg libtasn1
         AddPkg bash
         AddPkg bash-completion
-        AddPkg p11-kit
-        AddPkg gmp
-        AddPkg tpm-emulator
-        AddPkg trousers
-        AddPkg nettle
-        AddPkg gnutls
-        AddPkg libgpg-error
-        AddPkg libassuan
-        AddPkg libgcrypt
-        AddPkg libksba
-        AddPkg npth
-        AddPkg pinentry-tty
-        AddPkg pinentry-curses
-        AddPkg pinentry
-        AddPkg gnupg
-        AddPkg subversion
-        AddPkg p5-subversion
-        AddPkg p5-GSSAPI
-        AddPkg p5-Authen-SASL
-        AddPkg python38
         AddPkg git
         AddPkg wget
         AddPkg nano
-        AddPkg libXau
-        AddPkg xorgproto
-        AddPkg libXdmcp
-        AddPkg libpthread-stubs
-        AddPkg libxcb
-        AddPkg libX11
-        AddPkg libXext
-        AddPkg png
-        AddPkg libslang2
-        AddPkg libssh2
-        AddPkg libsigsegv
-        AddPkg diffutils
         AddPkg mc
-        AddPkg cyrus-sasl
-        AddPkg lsof
-        AddPkg htop
-        AddPkg freetype2
-        AddPkg protobuf
-        AddPkg uchardet
-        AddPkg libpaper
-        AddPkg psutils
-        AddPkg groff
-        AddPkg cyrus-sasl
-        AddPkg py38-zipp
-        AddPkg py38-importlib-metadata
-        AddPkg libdaemon
-        AddPkg py38-dnspython
-        AddPkg py38-markdown
-        AddPkg fontconfig
-        AddPkg jbigkit
-        AddPkg jpeg-turbo
-        AddPkg libfontenc
-        AddPkg lua53
-        AddPkg pixman
-        AddPkg tcl86
-        AddPkg zstd
-        AddPkg tiff
-        AddPkg gnome_subr
-        AddPkg dbus-glib
-        AddPkg avahi-app
-        AddPkg gamin
-        AddPkg libarchive
-        AddPkg libunwind
-        AddPkg jansson
-        AddPkg talloc
-        AddPkg lmdb
-        AddPkg tevent
-        AddPkg popt
-        AddPkg tdb
-        AddPkg libsunacl
         AddPkg openssl
        
         
