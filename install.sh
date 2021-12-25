@@ -66,11 +66,6 @@ main() {
 
     # Ayar Dosyaları Repodan cekiliyor...
     _cloneconfig
- 
-
-
-    # freeRADIUS3 kuruluyor...
-    _radiusInstall
 
     # Cron kuruluyor...
     _cronInstall
@@ -82,7 +77,7 @@ main() {
     #_squidGuardInstall
 
     # Hotspot Konfigurasyon yukleniyor...
-    _hotspotSettings
+    _settings
 
     # Temizlik
     _clean
@@ -241,7 +236,6 @@ _installPackages() {
         AddPkg lsof
         AddPkg htop
         AddPkg freetype2
-        AddPkg openldap24-client
         AddPkg protobuf
         AddPkg uchardet
         AddPkg libpaper
@@ -275,12 +269,7 @@ _installPackages() {
         AddPkg popt
         AddPkg tdb
         AddPkg libsunacl
-        AddPkg mysql57-client
-        AddPkg mysql57-server
-        AddPkg samba412
         AddPkg openssl
-        AddPkg unixODBC
-        AddPkg freetds
        
         
 
@@ -295,13 +284,13 @@ _installPackages() {
             AddPkg compat8x-i386
         fi
 
-        AddPkg php74-mysqli
-        AddPkg php74-pdo_mysql
-        AddPkg php74-iconv
-        AddPkg php74-soap
-        AddPkg php74-odbc
-        AddPkg php74-pdo_dblib
-        AddPkg php74-pdo_odbc
+        #AddPkg php74-mysqli
+        #AddPkg php74-pdo_mysql
+        #AddPkg php74-iconv
+        #AddPkg php74-soap
+        #AddPkg php74-odbc
+        #AddPkg php74-pdo_dblib
+        #AddPkg php74-pdo_odbc
         
 
         hash -r
@@ -317,33 +306,13 @@ _installPackages() {
 _cloneconfig() {
     echo -n ${L_CLONECONFIG} 1>&3
     cd /usr/local
-    git clone https://github.com/warning31/hotspot.git
-    cd /usr/local/hotspot
-    cd /usr/local/hotspot/config
+    git clone https://github.com/warning31/firewall.git
+    cd /usr/local/firewall
+    cd /usr/local/firewall/config
     echo ${L_OK} 1>&3
 }
 
 
-_radiusInstall() {
-    /usr/local/sbin/pfSsh.php playback listpkg | grep "freeradius2"
-    if [ $? == 0 ]; then
-        echo -n ${L_RADIUS2ALREADYINSTALLED} 1>&3
-        /usr/local/sbin/pfSsh.php playback uninstallpkg "freeradius2"
-    fi
-    /usr/local/sbin/pfSsh.php playback listpkg | grep "freeradius3"
-    if [ $? == 0 ]; then
-        echo -n ${L_RADIUSALREADYINSTALLED} 1>&3
-    else
-        echo -n ${L_RADIUSINSTALL} 1>&3
-        /usr/local/sbin/pfSsh.php playback installpkg "freeradius3"
-        hash -r
-    fi
-    if [ ! -f /etc/rc.conf.local ] || [ $(grep -c radiusd_enable /etc/rc.conf.local) -eq 0 ]; then
-        echo 'radiusd_enable="YES"' >>/etc/rc.conf.local
-    fi
-    echo ${L_OK} 1>&3
-
-}
 
 _cronInstall() {
     /usr/local/sbin/pfSsh.php playback listpkg | grep "cron"
@@ -383,23 +352,22 @@ _cronInstall() {
 #}
 
 
-_hotspotSettings() {
+_settings() {
     echo -n ${L_HOTSPOTSETTINGS} 1>&3
-    cp /usr/local/hotspot/config/hotspotconfig.php /etc/phpshellsessions/hotspotconfig
-    sed -i .bak -e "s/{H_MYSQL_USER_NAME}/$H_MYSQL_USER_NAME/g" /etc/phpshellsessions/hotspotconfig
-    sed -i .bak -e "s/{H_MYSQL_USER_PASS}/$H_MYSQL_USER_PASS/g" /etc/phpshellsessions/hotspotconfig
-    sed -i .bak -e "s/{H_MYSQL_DBNAME}/$H_MYSQL_DBNAME/g" /etc/phpshellsessions/hotspotconfig
-    sed -i .bak -e "s/{H_ZONE_NAME}/$H_ZONE_NAME/g" /etc/phpshellsessions/hotspotconfig
-    sed -i .bak -e "s/{H_KABLOSUZ_INTERFACES}/$H_KABLOSUZ_INTERFACES/g" /etc/phpshellsessions/hotspotconfig
-    sed -i .bak -e "s/{H_LAN_INTERFACES}/$H_LAN_INTERFACES/g" /etc/phpshellsessions/hotspotconfig
-    /usr/local/sbin/pfSsh.php playback hotspotconfig
+    cp /usr/local/firewall/config/config.php /etc/phpshellsessions/config
+    sed -i .bak -e "s/{H_MYSQL_USER_NAME}/$H_MYSQL_USER_NAME/g" /etc/phpshellsessions/config
+    sed -i .bak -e "s/{H_MYSQL_USER_PASS}/$H_MYSQL_USER_PASS/g" /etc/phpshellsessions/config
+    sed -i .bak -e "s/{H_MYSQL_DBNAME}/$H_MYSQL_DBNAME/g" /etc/phpshellsessions/config
+    sed -i .bak -e "s/{H_ZONE_NAME}/$H_ZONE_NAME/g" /etc/phpshellsessions/config
+    sed -i .bak -e "s/{H_KABLOSUZ_INTERFACES}/$H_KABLOSUZ_INTERFACES/g" /etc/phpshellsessions/config
+    sed -i .bak -e "s/{H_LAN_INTERFACES}/$H_LAN_INTERFACES/g" /etc/phpshellsessions/config
+    /usr/local/sbin/pfSsh.php playback config
     echo ${L_OK} 1>&3
 }
 
 _clean() {
     rm -rf ${START_PATH}/lang_*
 #    rm -rf /usr/local/hotspot/config/client.cnf*
-    rm -rf /usr/local/www/phpMyAdmin-5.1.1-all-languages.tar.gz
    # cp /usr/local/etc/mysql/my.cnfyedek /usr/local/etc/mysql/my.cnf
  #   rm -rf /usr/local/hotspot/config/hotspot.sql*
 #   rm -rf /usr/local/hotspot/config/qhotspot.sh*
