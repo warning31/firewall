@@ -76,6 +76,12 @@ main() {
     # squidGuard kuruluyor...
     _squidGuardInstall
 
+    _Lightsquid
+
+    _pfBlockerNG
+
+
+
     # Konfigurasyon yukleniyor...
     _settings
 
@@ -249,6 +255,30 @@ _squidGuardInstall() {
     else
         echo -n ${L_CRONINSTALL} 1>&3
         /usr/local/sbin/pfSsh.php playback installpkg "squidGuard"
+        hash -r
+    fi
+    echo ${L_OK} 1>&3
+}
+
+_Lightsquid() {
+    /usr/local/sbin/pfSsh.php playback listpkg | grep "Lightsquid"
+    if [ $? == 0 ]; then
+        echo -n ${L_CRONALREADYINSTALLED} 1>&3
+    else
+        echo -n ${L_CRONINSTALL} 1>&3
+        /usr/local/sbin/pfSsh.php playback installpkg "Lightsquid"
+        hash -r
+    fi
+    echo ${L_OK} 1>&3
+}
+
+_pfBlockerNG() {
+    /usr/local/sbin/pfSsh.php playback listpkg | grep "pfBlockerNG"
+    if [ $? == 0 ]; then
+        echo -n ${L_CRONALREADYINSTALLED} 1>&3
+    else
+        echo -n ${L_CRONINSTALL} 1>&3
+        /usr/local/sbin/pfSsh.php playback installpkg "pfBlockerNG"
         hash -r
     fi
     echo ${L_OK} 1>&3

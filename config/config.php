@@ -1,5 +1,8 @@
 global $config;
 $config = parse_config(true);
+$squid = &$config['installedpackages']['squid']['config'][0];
+$squidguardgeneral = &$config['installedpackages']['squidguardgeneral']['config'][0]; // 
+$squidantivirus = &$config['installedpackages']['squidantivirus']['config'][0]; // Antivirus
 // Cron Ekleme
 //if (!array_search("/usr/local/bin/mysql_check.sh", array_column($config['cron']['item'], "command"))) {
  //   $config['cron']['item'][] = array(
@@ -14,6 +17,26 @@ $config = parse_config(true);
    // write_config("Hotspot Check Cron added.");
 //}
 
+
+// squid Ayarlari 
+$squid = [
+'enable_squid' => on
+
+
+];
+
+// Squid Guard Ayarlari 
+$squidguardgeneral = [
+'squidguard_enable' => on
+
+];
+
+
+// Squid Guard Ayarlari 
+$squidantivirus = [
+'enable' => on
+
+];
 
 
 
