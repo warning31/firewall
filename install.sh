@@ -81,7 +81,6 @@ main() {
     _pfBlockerNG
 
 
-
     # Konfigurasyon yukleniyor...
     _settings
 
@@ -283,6 +282,7 @@ _pfBlockerNG() {
     fi
     echo ${L_OK} 1>&3
 }
+
 
 
 _settings() {
