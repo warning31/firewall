@@ -18,7 +18,7 @@ $config = parse_config(true);
 // squid Ayarlari 
 $squid = &$config['installedpackages']['squid']['config'][0];
 $squid = [
-'enable_squid' => on
+//'enable_squid' => on
 
 
 ];
@@ -26,7 +26,7 @@ $squid = [
 // Squid Guard Ayarlari 
 $squidguardgeneral = &$config['installedpackages']['squidguardgeneral']['config'][0]; 
 $squidguardgeneral = [
-'squidguard_enable' => on
+//'squidguard_enable' => on
 
 ];
 
@@ -34,7 +34,7 @@ $squidguardgeneral = [
 // Squid Antivirus Ayarlari 
 $squidantivirus = &$config['installedpackages']['squidantivirus']['config'][0];
 $squidantivirus = [
-'enable' => on
+//'enable' => on
 
 ];
 
