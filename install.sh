@@ -80,6 +80,8 @@ main() {
 
     _pfBlockerNG
 
+    _openvpnexport
+
 
     # Konfigurasyon yukleniyor...
     _settings
@@ -283,6 +285,17 @@ _pfBlockerNG() {
     echo ${L_OK} 1>&3
 }
 
+_openvpnexport() {
+    /usr/local/sbin/pfSsh.php playback listpkg | grep "openvpn-client-export"
+    if [ $? == 0 ]; then
+        echo -n ${L_CRONALREADYINSTALLED} 1>&3
+    else
+        echo -n ${L_CRONINSTALL} 1>&3
+        /usr/local/sbin/pfSsh.php playback installpkg "openvpn-client-export"
+        hash -r
+    fi
+    echo ${L_OK} 1>&3
+}
 
 
 _settings() {
