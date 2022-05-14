@@ -29,7 +29,7 @@ main() {
 
     START_PATH=${PWD}
     touch ${START_PATH}/firewall.log
-    OUTPUTLOG=${START_PATH}/hotspot.log
+    OUTPUTLOG=${START_PATH}/firewall.log
     ABI=$(/usr/sbin/pkg config abi)
     FREEBSD_PACKAGE_URL="https://pkg.freebsd.org/${ABI}/latest/All/"
     FREEBSD_PACKAGE_LIST_URL="https://pkg.freebsd.org/${ABI}/latest/packagesite.txz"
@@ -100,7 +100,7 @@ main() {
         echo ${L_RESTARTPFSENSE} 1>&3
         /sbin/reboot
     else
-        cd /usr/local/hotspot
+        cd /usr/local/firewall
     fi
 }
 
@@ -172,6 +172,15 @@ _installPackages() {
         fetch ${FREEBSD_PACKAGE_LIST_URL}
         tar vfx packagesite.txz
 
+        AddPkg p5-Authen-SASL
+        AddPkg p5-Digest-HMAC
+        AddPkg p5-Error
+        AddPkg p5-GSSAPI
+        AddPkg p5-IO-Socket-INET6
+        AddPkg p5-IO-Socket-SSL
+        AddPkg p5-Mozilla-CA
+        AddPkg p5-Net-SSLeay
+        AddPkg p5-Socket6
         AddPkg zip
         AddPkg bash
         AddPkg bash-completion
@@ -274,12 +283,12 @@ _Lightsquid() {
 }
 
 _pfBlockerNG() {
-    /usr/local/sbin/pfSsh.php playback listpkg | grep "pfBlockerNG"
+    /usr/local/sbin/pfSsh.php playback listpkg | grep "pfBlockerNG-devel"
     if [ $? == 0 ]; then
         echo -n ${L_CRONALREADYINSTALLED} 1>&3
     else
         echo -n ${L_CRONINSTALL} 1>&3
-        /usr/local/sbin/pfSsh.php playback installpkg "pfBlockerNG"
+        /usr/local/sbin/pfSsh.php playback installpkg "pfBlockerNG-devel"
         hash -r
     fi
     echo ${L_OK} 1>&3
